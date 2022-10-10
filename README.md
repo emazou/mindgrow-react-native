@@ -1,1 +1,0 @@
-# mindgrow-react-native
