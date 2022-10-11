@@ -39,7 +39,7 @@ export default function Tabs() {
                 }}
             />
             <Tab.Screen
-                name="Cart"
+                name="CartTab"
                 component={CartStack}
                 options={{
                     tabBarLabel: 'Cart',
