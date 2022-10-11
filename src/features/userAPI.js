@@ -1,5 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import api_url from "../../api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token')
+      if(value !== null) {
+        return value
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
 export const usersAPI = createApi({
     reducerPath: 'usersAPI',
     baseQuery: fetchBaseQuery({
@@ -12,7 +23,7 @@ export const usersAPI = createApi({
                 query: (id) => ({
                 url: `/users/${id}`,
                 method: 'GET',
-                // headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${getData()}`}
             })
         }),
         signUp: builder.mutation({
