@@ -1,14 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-let products = []
-// if (localStorage.getItem('cart')) {
-//     products = JSON.parse(localStorage.getItem('cart'))
-// } else {
-//     products = []
-// }
+
 export const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        productsCart: products,
+        productsCart: [],
         billDetail: {}
     },
     reducers: {
@@ -22,33 +17,19 @@ export const cartSlice = createSlice({
         },
         deleteProduct: (state, action) => {
             state.productsCart = state.productsCart.filter((product) => product.id !== action.payload)
-            /*toast.success(`Product deleted`, {
-                style: {
-                    borderRadius: ".5rem",
-                    background: "#3f3d56",
-                    color: "aliceblue",
-                },
-            });*/
+            console.log(action.payload)
         },
         increment: (state, action) => {
             let product = state.productsCart.find(item => item.id === action.payload)
             if (product && product.quantity < product.stock) {
                 product.quantity++
-            } /*else {
-                toast(`${product.quantity} products available`, {
-                    icon: "😓",
-                    style: {
-                        borderRadius: ".5rem",
-                        background: "#3f3d56",
-                        color: "aliceblue",
-                    },
-                });
-            }*/
+            }
         },
         decrement: (state, action) => {
             let product = state.productsCart.find(item => item.id === action.payload)
             if (product && product.quantity > 1) {
                 product.quantity--
+                console.log('entre')
             }
         },
         setBill: (state, action) => {

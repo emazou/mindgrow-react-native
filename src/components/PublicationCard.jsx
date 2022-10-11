@@ -1,12 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
-import { Image, View, Text, TouchableOpacity, Dimensions, Alert } from 'react-native'
-import { useSelector, useDispatch } from "react-redux";
-import { addProduct } from '../features/cartSlice';
+import { Image, View, Text, TouchableOpacity, Dimensions } from 'react-native'
 const width = Dimensions.get('window').width
 
 export default function ProductCard(props) {
-    const user = useSelector(state => state.logged.user)
-    const dispatch = useDispatch();
     const navigation = useNavigation()
     return (
         <View style={{
@@ -38,14 +34,6 @@ export default function ProductCard(props) {
                 }}
                 resizeMode="contain"
             />
-            <Text style={{
-                textAlign: "left",
-                fontWeight: 'bold',
-                fontSize: 20,
-                paddingTop: 10
-            }}>
-                {props.name}
-            </Text>
             <Text
                 style={{
                     padding: "1%",
@@ -55,14 +43,15 @@ export default function ProductCard(props) {
                 }}>
                 {props.category}
             </Text>
-            <Text
-                style={{
-                    padding: "1%",
-                    textAlign: 'left',
-                    fontSize: 20,
-                }}>
-                ${props.price}
+            <Text style={{
+                textAlign: "left",
+                fontWeight: 'bold',
+                fontSize: 20,
+                paddingTop: 10
+            }}>
+                {props.name}
             </Text>
+
             <View
                 style={{
                     flex: 1,
@@ -80,7 +69,7 @@ export default function ProductCard(props) {
                         alignItems: "center",
                         borderRadius: 30,
                     }}
-                    onPress={() => navigation.navigate('Detail', { id: props.id })}
+                    onPress={() => navigation.navigate('PublicationDetail', { id: props.id })}
                 >
                     <Text
                         style={{
@@ -89,40 +78,8 @@ export default function ProductCard(props) {
                             padding: "5%",
                         }}
                     >
-                        View More
+                        Read More
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: '#74B49B',
-                        width: "20%",
-                        alignItems: "center",
-                        borderRadius: 30,
-                        margin: 10,
-                        padding: 4
-                    }}
-                    onPress={() => {
-                        if (user) {
-                            dispatch(addProduct({
-                                id: props.id,
-                                photo: props.photo,
-                                name: props.name,
-                                price: props.price,
-                                stock: props.stock,
-                                quantity: 1,
-                            }))
-                            Alert.alert("Product added")
-                        } else {
-                            Alert.alert("You must register first")
-                        }
-                    }}>
-                    <Image
-                        source={{ uri: 'https://www.iconpacks.net/icons/2/free-add-to-cart-icon-3046-thumb.png' }}
-                        style={{
-                            width: 30,
-                            height: 30,
-                        }}
-                    />
                 </TouchableOpacity>
             </View>
         </View >

@@ -54,7 +54,7 @@ export default function Tabs() {
                 name="AccountDrawer"
                 component={Drawer}
                 options={{
-                    tabBarLabel: 'Account',
+                    tabBarLabel: 'Profile',
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="account-circle" color={color} size={size} />
