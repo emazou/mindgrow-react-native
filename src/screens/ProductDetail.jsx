@@ -4,9 +4,12 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useGetProductMutation } from "../features/productsAPI";
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 
 export default function ProductDetail({ navigation, route }) {
   const [pDetail, setPDetail] = useState({})
@@ -31,13 +34,17 @@ export default function ProductDetail({ navigation, route }) {
   return (
     <ScrollView
       style={{
-        width: "100%",
-        height: "100%",
+        width: width,
+        height: height,
+        marginVertical: 30,
+        
+
       }}
       contentContainerStyle={{
         justifyContent: "center",
         alignContent: "center",
       }}
+      decelerationRate={0}
     >
       {/* Start View */}
       <View
@@ -50,20 +57,31 @@ export default function ProductDetail({ navigation, route }) {
           backgroundColor: "#fff",
           opacity: 0.8,
           borderRadius: 30,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.37,
+          shadowRadius: 7.49,
+          elevation: 12,
+          borderRadius: 30,
         }}
       >
         {/* Image */}
         <Image
           source={{ uri: pDetail?.photo }}
           style={{
-            width: "100%",
-            height: "50%"
+            width: 340,
+            height: 340,
+            resizeMode: 'cover',
+            borderRadius: 30,
           }}
         />
         {/* category */}
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 15,
             color: "black",
             padding: "2%",
           }}
@@ -75,48 +93,13 @@ export default function ProductDetail({ navigation, route }) {
         {/* Name  */}
         <Text
           style={{
-            fontSize: 30,
+            fontSize: 25,
             color: "#77628C",
             padding: "2%",
+            textAlign: 'center'
           }}
         >
           {pDetail?.name}
-        </Text>
-
-        {/* description */}
-        <Text
-          style={{
-            fontSize: 20,
-            color: "black",
-            padding: "5%",
-            textAlign: "justify",
-            backgroundColor: '#A7D7C5',
-            margin: 10
-          }}
-        >
-          {pDetail?.description}
-        </Text>
-        {/* stock */}
-        <Text
-          style={{
-            fontSize: 15,
-            color: "#A7D7C5'",
-            padding: "2%",
-          }}
-        >
-          {" "}
-          Stock: {pDetail?.stock}
-        </Text>
-        {/* price */}
-        <Text
-          style={{
-            fontSize: 25,
-            color: "#A7D7C5'",
-            padding: "2%",
-          }}
-        >
-          {" "}
-          $ {pDetail?.price}
         </Text>
         <View
           style={{
@@ -124,31 +107,46 @@ export default function ProductDetail({ navigation, route }) {
             height: '15%',
             justifyContent: 'space-around',
             alignItems: 'center',
+            flexDirection: 'row',
+            borderBottomColor: '#A7D7C5',
+            borderBottomWidth: 5
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
-              backgroundColor: "indigo",
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              textAlign: 'left',
               width: "40%",
-              alignItems: "center",
-              borderRadius: 30,
-              marginBottom: 15,
-            }}
-            onPress={() => navigation.navigate('Shop')}
-          >
+              height: "100%"
+            }}>
+
+            {/* stock */}
             <Text
               style={{
-                color: "#d3d3d3",
-                fontWeight: "bold",
-                padding: "5%",
+                fontSize: 13,
+                color: "#A7D7C5'",
+                padding: "2%",
               }}
             >
-              Go back
+              {" "}
+              Stock: {pDetail?.stock}
             </Text>
-          </TouchableOpacity>
+            {/* price */}
+            <Text
+              style={{
+                fontSize: 25,
+                color: "#74B49B'",
+                padding: "2%",
+              }}
+            >
+              {" "}
+              $ {pDetail?.price}
+            </Text>
+          </View>
           <TouchableOpacity
             style={{
-              backgroundColor: "indigo",
+              backgroundColor: "#5C8D89",
               width: "40%",
               alignItems: "center",
               borderRadius: 30,
@@ -156,19 +154,20 @@ export default function ProductDetail({ navigation, route }) {
             }}
             onPress={() => {
               if (user) {
-                  dispatch(addProduct({
-                          id: props.id,
-                          photo: props.photo,
-                          name: props.name,
-                          price: props.price,
-                          stock: props.stock,
-                          quantity: 1,
-                          }))
-                      }}}
+                dispatch(addProduct({
+                  id: props.id,
+                  photo: props.photo,
+                  name: props.name,
+                  price: props.price,
+                  stock: props.stock,
+                  quantity: 1,
+                }))
+              }
+            }}
           >
             <Text
               style={{
-                color: "#d3d3d3",
+                color: "#F9F8EB",
                 fontWeight: "bold",
                 padding: "5%",
               }}
@@ -177,6 +176,28 @@ export default function ProductDetail({ navigation, route }) {
             </Text>
           </TouchableOpacity>
         </View>
+        <Text
+          style={{
+            color: '#74B49B',
+            fontSize: 25,
+            textAlign: 'center',
+            paddingVertical: 7
+          }}
+        >Description</Text>
+        {/* description */}
+        <Text
+          style={{
+            fontSize: 18,
+            color: "black",
+            padding: "5%",
+            textAlign: "justify",
+            backgroundColor: '#A7D7C5',
+            margin: 10,
+            borderRadius: 15
+          }}
+        >
+          {pDetail?.description}
+        </Text>
       </View>
     </ScrollView>
   )
