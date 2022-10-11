@@ -75,8 +75,8 @@ export default function Products() {
                         data={[{ key: '', value: 'All subcategories' }, ...subcategories]}
                         setSelected={setSubcategory}
                         placeholder='Select subcategory'
-                        boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10,}}
-                        dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center',}}
+                        boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10, }}
+                        dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center', }}
                         defaultOption={{ key: '', value: "Subcategories" }}
                         search={false}
                     />
@@ -117,25 +117,13 @@ export default function Products() {
                         category={item.category}
                         price={item.price}
                         id={item._id}
+                        stock={item.stock?item.stock: 1}
                         navigation={navigation}
                     />}
                 keyExtractor={(item) => item._id}
                 showsVerticalScrollIndicator={false}
+                decelerationRate={0}
             />
-            {/* <View>
-                {
-                    products?.map((item) =>
-                        <ProductCard
-                            key={item._id}
-                            name={item.name}
-                            photo={item.photo}
-                            category={item.category}
-                            price={item.price}
-                            id={item._id}
-                            navigation={navigation}
-                        />)
-                }
-            </View> */}
             {
                 isLoading &&
                 <View style={[styles.container, styles.horizontal]}>
