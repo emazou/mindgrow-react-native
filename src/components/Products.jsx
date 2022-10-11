@@ -1,7 +1,7 @@
-import { View, Text, TextInput, Dimensions, ScrollView } from 'react-native'
+import { View, Text, ActivityIndicator, FlatList, StyleSheet, TextInput, Dimensions, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useGetAllProductsQuery } from '../features/productsAPI'
-/* import SelectList from 'react-native-dropdown-select-list' */
+import SelectList from 'react-native-dropdown-select-list'
 import NotFound from './NotFound'
 import ProductCard from './ProductCard'
 import { useNavigation } from '@react-navigation/native'
@@ -15,15 +15,19 @@ export default function Products() {
     const [category, setCategory] = useState('')
     const [subcategory, setSubcategory] = useState('')
     const { data, isLoading } = useGetAllProductsQuery({ sort: sort, category: category, product: product, subcategory: subcategory })
-    const subcategories = data?.response.subcategories
+    const dataSubcategories = data?.response.subcategories
     let products = data?.response.products
-    const categories = [{key:'1', value:'Cannabis'}, {key:'2', value:'Topicals'}, {key: '3', value: 'Vaping'}, {key: '4', value:'Pets'}, {key:'5', value: 'Edibles'}]
+    const categories = [{ key: '', value: "All categories" }, { key: 'Cannabis', value: 'Cannabis' }, { key: 'Topicals', value: 'Topicals' }, { key: 'Vaping', value: 'Vaping' }, { key: 'Pets', value: 'Pets' }, { key: 'Edibles', value: 'Edibles' }]
+    const subcategories = dataSubcategories?.map((item) => ({ key: item, value: item }))
+    const order = [{ key: '', value: 'Oder by' }, { key: '1', value: "Lowest price" }, { key: '-1', value: "Highest price" }]
     return (
-        <ScrollView
+        <View
             style={{
                 flex: 1,
                 width: width,
                 height: height,
+                justifyContent: "center",
+                alignItems: "center",
                 backgroundColor: '#fff'
             }}
             contentContainerStyle={{
@@ -36,7 +40,7 @@ export default function Products() {
             <View
                 styles={{
                     flex: 1,
-                    justifyContent: "center",
+                    flexDirection: "row",
                     backgroundColor: '#A7D7C5',
                     padding: 7,
                     width: "100%",
@@ -50,21 +54,62 @@ export default function Products() {
                         backgroundColor: "#f5f5f5",
                         marginTop: 10,
                         borderRadius: 15,
-                        paddingStart: 25, 
-                        position: 'fixed'
+                        paddingStart: 25,
                     }}
                     placeholder={'Search product...'}
                     value={product}
                     onChangeText={(product) => setProduct(product)}
                 />
-               {/*  <SelectList setSelected={setCategory} data={categories} onSelect={() => alert(selected)} /> */}
+                <SelectList
+                    data={categories}
+                    setSelected={setCategory}
+                    placeholder='Select category'
+                    boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10 }}
+                    defaultOption={{ key: '', value: "Categories" }}
+                    dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center' }}
+                    search={false} /* onSelect={() => alert(category)} */
+                />
+                {
+                    category != "" &&
+                    <SelectList
+                        data={[{ key: '', value: 'All subcategories' }, ...subcategories]}
+                        setSelected={setSubcategory}
+                        placeholder='Select subcategory'
+                        boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10,}}
+                        dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center',}}
+                        defaultOption={{ key: '', value: "Subcategories" }}
+                        search={false}
+                    />
+                }
+                <SelectList
+                    data={order}
+                    setSelected={setSort}
+                    placeholder='Select category'
+                    boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10 }}
+                    defaultOption={{ key: '', value: "Order by" }}
+                    dropdownStyles={{ width: "60%", alignSelf: 'center' }}
+                    search={false} /* onSelect={() => alert(category)} */
+                />
+
             </View>
             {
                 products?.length === 0 ? <NotFound /> : null
             }
+            <Text
+                style={{
+                    marginVertical: 10,
+                    color: '#74B49B',
+                    fontSize: 25,
+                }}
+            >
+                {
+                    category === "" ? "All categories" : category
+                }
+            </Text>
 
-            {
-                products?.map((item) =>
+            <FlatList
+                data={products}
+                renderItem={({ item }) =>
                     <ProductCard
                         key={item._id}
                         name={item.name}
@@ -73,8 +118,43 @@ export default function Products() {
                         price={item.price}
                         id={item._id}
                         navigation={navigation}
-                    />)
+                    />}
+                keyExtractor={(item) => item._id}
+                showsVerticalScrollIndicator={false}
+            />
+            {/* <View>
+                {
+                    products?.map((item) =>
+                        <ProductCard
+                            key={item._id}
+                            name={item.name}
+                            photo={item.photo}
+                            category={item.category}
+                            price={item.price}
+                            id={item._id}
+                            navigation={navigation}
+                        />)
+                }
+            </View> */}
+            {
+                isLoading &&
+                <View style={[styles.container, styles.horizontal]}>
+                    <ActivityIndicator />
+                </View>
             }
-        </ScrollView>
+        </View>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '100%',
+        height: '50%',
+        justifyContent: "center"
+    },
+    horizontal: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
+    }
+});
