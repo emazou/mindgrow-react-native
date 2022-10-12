@@ -1,4 +1,4 @@
-import { View, Text, Dimensions,Image, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Dimensions, Image, TouchableOpacity, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,7 +8,7 @@ const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
 export default function CartScreen(props) {
-  const reload = useSelector(state=> state.reload.reloadState)
+  const user = useSelector(state => state.logged.user)
   const navigation = useNavigation()
   const productsCart = useSelector(state => state.cart.productsCart)
   let array = productsCart.map((item) => item.price * item.quantity);
@@ -33,14 +33,14 @@ export default function CartScreen(props) {
         }}>
         {productsCart.length === 0 ? (
           <View
-          style={{
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            backgroundColor: '#fff',
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+            style={{
+              flex: 1,
+              width: "100%",
+              height: "100%",
+              backgroundColor: '#fff',
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
             <Text>Empty cart</Text>
             <Image
               source={{ uri: "https://www.qrcardboard.com/images/cart.gif?v=01" }}
@@ -69,41 +69,47 @@ export default function CartScreen(props) {
           />
         )}
       </View>
-      <View
-        style={{
-          width: "100%",
-          height: 50,
-          borderTopWidth: 3,
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}>
-        <Text
-          style={{
-            marginTop: 10
-          }}
-        >Total:</Text>
-        <Text
-          style={{
-            marginTop: 10
-          }}
-        >${total.toFixed(2)}</Text>
-      </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#77628C",
-          width: "50%",
-          alignItems: "center",
-          borderRadius: 30,
-          paddingVertical: 5,
-          justifySelf: 'flex-end',
-          marginBottom: 8
-        }}
-        onPress={() => navigation.navigate('Billing', { id: props.id })}>
-        <Text
-          style={{
-            color: '#F9F8EB'
-          }}>Proceed to Billing</Text>
-      </TouchableOpacity>
+      {
+        ( user && productsCart.length>0) &&
+        <>
+          <View
+            style={{
+              width: "100%",
+              height: 50,
+              borderTopWidth: 3,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}>
+            <Text
+              style={{
+                marginTop: 10
+              }}
+            >Total:</Text>
+            <Text
+              style={{
+                marginTop: 10
+              }}
+            >${total.toFixed(2)}</Text>
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#77628C",
+              width: "50%",
+              alignItems: "center",
+              borderRadius: 30,
+              paddingVertical: 5,
+              justifySelf: 'flex-end',
+              marginBottom: 8
+            }}
+            onPress={() => navigation.navigate('ShippingInfo')}>
+            <Text
+              style={{
+                color: '#F9F8EB'
+              }}>Proceed to Shipping</Text>
+          </TouchableOpacity>
+        </>
+      }
     </View>
+
   )
 }
