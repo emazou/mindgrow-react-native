@@ -26,7 +26,7 @@ export default function CartScreen(props) {
       decelerationRate={0}>
 
 
-      <View
+      <ScrollView
         style={{
           width: "100%",
           flexGrow: 1
@@ -35,13 +35,17 @@ export default function CartScreen(props) {
           <View
             style={{
               flex: 1,
-              width: "100%",
-              height: "100%",
+              width: width,
+              height: height,
               backgroundColor: '#fff',
               justifyContent: "center",
               alignItems: "center",
             }}>
-            <Text>Empty cart</Text>
+            <Text
+              style={{
+                fontSize: 25
+              }}
+            >Empty cart</Text>
             <Image
               source={{ uri: "https://www.qrcardboard.com/images/cart.gif?v=01" }}
               style={{
@@ -51,27 +55,36 @@ export default function CartScreen(props) {
             />
           </View>
         ) : (
-          <FlatList
-            data={productsCart}
-            renderItem={({ item }) =>
-              <CartProduct
-                name={item.name}
-                photo={item.photo}
-                price={item.price}
-                quantity={item.quantity}
-                stock={item.stock}
-                id={item._id}
-              />
-            }
-            keyExtractor={(item) => Math.random().toString(12).substring(0)}
-            showsVerticalScrollIndicator={false}
-            decelerationRate={0}
-          />
+          <View>
+            <FlatList
+              data={productsCart}
+              renderItem={({ item }) =>
+                <CartProduct
+                  name={item.name}
+                  photo={item.photo}
+                  price={item.price}
+                  quantity={item.quantity}
+                  stock={item.stock}
+                  id={item._id}
+                />
+              }
+              keyExtractor={(item) => Math.random().toString(12).substring(0)}
+              showsVerticalScrollIndicator={false}
+              decelerationRate={0}
+            />
+          </View>
         )}
-      </View>
+      </ScrollView>
       {
-        ( user && productsCart.length>0) &&
-        <>
+        (user && productsCart.length > 0) &&
+        <View
+          style={{
+            width: "100%",
+            height: height * 0.13,
+            padding: 10,
+            alignItems: 'center'
+          }}
+        >
           <View
             style={{
               width: "100%",
@@ -104,10 +117,12 @@ export default function CartScreen(props) {
             onPress={() => navigation.navigate('ShippingInfo')}>
             <Text
               style={{
-                color: '#F9F8EB'
+                color: '#F9F8EB',
+                paddingVertical: 5,
+                fontWeight: '500'
               }}>Proceed to Shipping</Text>
           </TouchableOpacity>
-        </>
+        </View>
       }
     </View>
 

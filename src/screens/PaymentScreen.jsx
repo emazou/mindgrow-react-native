@@ -10,31 +10,31 @@ const PaymentScreen = () => {
   return (
     <ScrollView
       style={{
-        width: width,
-        height: height,
         backgroundColor: '#fff',
-        padding: 10,
+        height: height,
+        width: width,
+        padding: 25,
       }}
       contentContainerStyle={{
         justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      decelerationRate={0}>
+        alignItems: 'center'
+      }}>
       <View
         style={{
           flex: 1,
-          width: "90%",
+          width: width * .9,
+          height: height * .75,
           padding: 10,
-          justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#F9F8EB'
-
+          justifyContent: 'center',
+          backgroundColor: '#F9F8EB',
+          borderRadius: 15
         }}>
         <Text
           style={{
             fontWeight: '500',
             fontSize: 20,
-            color: '#77628C'
+            color: '#77628C',
           }}>Online Payment</Text>
         <TouchableOpacity
           style={{
@@ -64,7 +64,14 @@ const PaymentScreen = () => {
               color: 'black',
               textAlign: 'center'
             }}>Credit Card</Text>
-
+          <Image
+            source={{
+              uri: 'https://i.ibb.co/YTZv5p9/next.png'
+            }}
+            style={{
+              width: 30,
+              height: 30,
+            }} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -92,8 +99,14 @@ const PaymentScreen = () => {
               color: 'black',
               textAlign: 'center',
             }}>Debit Card</Text>
-
-
+          <Image
+            source={{
+              uri: 'https://i.ibb.co/YTZv5p9/next.png'
+            }}
+            style={{
+              width: 30,
+              height: 30,
+            }} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -121,12 +134,16 @@ const PaymentScreen = () => {
               color: 'black',
               textAlign: 'center'
             }}>Online Transfer</Text>
+          <Image
+            source={{
+              uri: 'https://i.ibb.co/YTZv5p9/next.png'
+            }}
+            style={{
+              width: 30,
+              height: 30,
+            }} />
         </TouchableOpacity>
-
-
       </View>
-
-      
     </ScrollView >
   )
 }
