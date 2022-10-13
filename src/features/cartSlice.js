@@ -4,7 +4,7 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState: {
         productsCart: [],
-        billDetail: {}
+        billDetail: null
     },
     reducers: {
         addProduct: (state, action) => {
@@ -29,7 +29,6 @@ export const cartSlice = createSlice({
             let product = state.productsCart.find(item => item.id === action.payload)
             if (product && product.quantity > 1) {
                 product.quantity--
-                console.log('entre')
             }
         },
         setBill: (state, action) => {
