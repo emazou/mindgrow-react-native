@@ -14,11 +14,13 @@ const store = configureStore({
         [productsAPI.reducerPath]: productsAPI.reducer,
         logged: loggedSlice,
         modal: modalSlice,
-        cart: cartSlice,
         reload: reloadSlice,
         edit: editSlice,
+        cart: cartSlice,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(usersAPI.middleware).concat(productsAPI.middleware).concat(questionsAnswersAPI.middleware)
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }).concat(usersAPI.middleware).concat(productsAPI.middleware).concat(questionsAnswersAPI.middleware)
 })
 export default store

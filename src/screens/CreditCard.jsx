@@ -95,6 +95,7 @@ export default function CreditCard() {
                     placeholder='0000 0000 0000'
                     onChangeText={setNumber}
                     maxLength='16'
+                    keyboardType='numeric'
                 />
                 <Text
                     style={styles.text}>Expiration date</Text>
@@ -108,11 +109,13 @@ export default function CreditCard() {
                     style={styles.text}>CVV</Text>
                 <TextInput
                     style={styles.input}
+                    keyboardType='numeric'
                 />
                 <Text
                     style={styles.text}>NIT</Text>
                 <TextInput
                     style={styles.input}
+                    keyboardType='numeric'
                 />
             </View>
             <TouchableOpacity

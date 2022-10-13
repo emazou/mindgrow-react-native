@@ -41,6 +41,7 @@ export default function Products() {
                 styles={{
                     flex: 1,
                     flexDirection: "row",
+                    height: height * .5,
                     backgroundColor: '#A7D7C5',
                     padding: 7,
                     width: "100%",
@@ -60,36 +61,45 @@ export default function Products() {
                     value={product}
                     onChangeText={(product) => setProduct(product)}
                 />
-                <SelectList
-                    data={categories}
-                    setSelected={setCategory}
-                    placeholder='Select category'
-                    boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10 }}
-                    defaultOption={{ key: '', value: "Categories" }}
-                    dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center' }}
-                    search={false} /* onSelect={() => alert(category)} */
-                />
-                {
-                    category != "" &&
+                <View
+                    style={{
+                        width: width,
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-around'
+                    }}
+                >
                     <SelectList
-                        data={[{ key: '', value: 'All subcategories' }, ...subcategories]}
-                        setSelected={setSubcategory}
-                        placeholder='Select subcategory'
-                        boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10, }}
-                        dropdownStyles={{ width: "60%", height: 'auto', alignSelf: 'center', }}
-                        defaultOption={{ key: '', value: "Subcategories" }}
+                        data={categories}
+                        setSelected={setCategory}
+                        placeholder='Select category'
+                        boxStyles={{ width: width * .4, alignSelf: 'center', marginTop: 10 }}
+                        defaultOption={{ key: '', value: "Categories" }}
+                        dropdownStyles={{ width: width * .4, height: 'auto', alignSelf: 'center' }}
                         search={false}
                     />
-                }
-                <SelectList
-                    data={order}
-                    setSelected={setSort}
-                    placeholder='Select category'
-                    boxStyles={{ width: "60%", alignSelf: 'center', marginTop: 10 }}
-                    defaultOption={{ key: '', value: "Order by" }}
-                    dropdownStyles={{ width: "60%", alignSelf: 'center' }}
-                    search={false} /* onSelect={() => alert(category)} */
-                />
+                    {
+                        category != "" &&
+                        <SelectList
+                            data={[{ key: '', value: 'All subcategories' }, ...subcategories]}
+                            setSelected={setSubcategory}
+                            placeholder='Select subcategory'
+                            boxStyles={{ width: width * .4, alignSelf: 'center', marginTop: 10, height: height * .1 }}
+                            dropdownStyles={{ width: width * .4, height: 'auto', alignSelf: 'center', }}
+                            defaultOption={{ key: '', value: "Subcategories" }}
+                            search={false}
+                        />
+                    }
+                    <SelectList
+                        data={order}
+                        setSelected={setSort}
+                        placeholder='Select category'
+                        boxStyles={{ width: width * .4, alignSelf: 'center', marginTop: 10 }}
+                        defaultOption={{ key: '', value: "Order by" }}
+                        dropdownStyles={{ width: width * .4, alignSelf: 'center' }}
+                        search={false}
+                    />
+                </View>
 
             </View>
             {
@@ -106,24 +116,34 @@ export default function Products() {
                     category === "" ? "All categories" : category
                 }
             </Text>
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    height: height * .5,
+                    padding: 7,
+                    width: "100%",
+                }}
+            >
 
-            <FlatList
-                data={products}
-                renderItem={({ item }) =>
-                    <ProductCard
-                        key={item._id}
-                        name={item.name}
-                        photo={item.photo}
-                        category={item.category}
-                        price={item.price}
-                        id={item._id}
-                        stock={item.stock?item.stock: 1}
-                        navigation={navigation}
-                    />}
-                keyExtractor={(item) => item._id}
-                showsVerticalScrollIndicator={false}
-                decelerationRate={0}
-            />
+                <FlatList
+                    data={products}
+                    renderItem={({ item }) =>
+                        <ProductCard
+                            key={item._id}
+                            name={item.name}
+                            photo={item.photo}
+                            category={item.category}
+                            price={item.price}
+                            id={item._id}
+                            stock={item.stock ? item.stock : 1}
+                            navigation={navigation}
+                        />}
+                    keyExtractor={(item) => item._id}
+                    showsVerticalScrollIndicator={false}
+                    decelerationRate={0}
+                />
+            </View>
             {
                 isLoading &&
                 <View style={[styles.container, styles.horizontal]}>
@@ -138,6 +158,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: '50%',
+        alignSelf: 'flex-start',
         justifyContent: "center"
     },
     horizontal: {

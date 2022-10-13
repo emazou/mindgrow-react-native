@@ -1,37 +1,32 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View, TextInput, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import api_url from '../../api';
 import { useNavigation } from "@react-navigation/native";
 import { setBill } from '../features/cartSlice'
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
 const ShippingInfo = () => {
-    const [name, setName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [country, setCountry] = useState('')
-    const [state, setState] = useState('')
-    const [shipping, setShipping] = useState('')
-    const [phone, setPhone] = useState('')
-    const [mail, setMail] = useState('')
-    const navigation = useNavigation('')
+    const [name, setName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [country, setCountry] = useState("")
+    const [state, setState] = useState("")
+    const [shipping, setShipping] = useState("")
+    const [phone, setPhone] = useState("")
+    const [mail, setMail] = useState("")
+    const navigation = useNavigation("")
     const dispatch = useDispatch()
-
-    const products = useSelector(state => state.cart.productsCart)
+    const bill = {
+        name: name,
+        lastName: lastName,
+        country: country,
+        state: state,
+        shipping: shipping,
+        mail: mail,
+        phone: phone
+    }
     const billSave = () => {
-
-        dispatch(setBill({
-            name: name,
-            lastName: lastName,
-            country: country,
-            state: state,
-            shipping: shipping,
-            mail: mail,
-            phone: phone
-        }))
+        dispatch(setBill(bill))
         navigation.navigate('PaymentScreen')
     }
     return (
@@ -68,75 +63,88 @@ const ShippingInfo = () => {
                     <TextInput
                         style={styles.input}
                         value={name}
-                        onChange={setName}
+                        placeholder='Cinthya'
+                        onChangeText={setName}
                         keyboardType='text'
+                        name='name'
                     />
                     <Text
                         style={styles.text}>Last Name</Text>
                     <TextInput
                         style={styles.input}
                         value={lastName}
-                        onChange={setLastName}
+                        placeholder='Di Risio'
+                        onChangeText={setLastName}
                         keyboardType='text'
+                        name='lastName'
                     />
                     <Text
                         style={styles.text}>Country</Text>
                     <TextInput
                         style={styles.input}
                         value={country}
-                        onChange={setCountry}
+                        placeholder='Argentina'
+                        onChangeText={setCountry}
                         keyboardType='text'
+                        name='country'
                     />
                     <Text
                         style={styles.text}>State</Text>
                     <TextInput
                         style={styles.input}
                         value={state}
-                        onChange={setState}
+                        placeholder='State'
+                        onChangeText={setState}
                         keyboardType='text'
+                        name='state'
                     />
                     <Text
                         style={styles.text}>Shipping Address</Text>
                     <TextInput
                         style={styles.input}
                         value={shipping}
-                        onChange={setShipping}
+                        placeholder='CR 55 #54-98'
+                        onChangeText={setShipping}
                         keyboardType='text'
+                        name='shipping'
                     />
                     <Text
                         style={styles.text}>Phone</Text>
                     <TextInput
                         style={styles.input}
                         value={phone}
-                        onChange={setPhone}
+                        placeholder='34523453'
+                        onChangeText={setPhone}
                         keyboardType='phone-pad'
+                        name='phone'
                     />
                     <Text
                         style={styles.text}>Email</Text>
                     <TextInput
                         style={styles.input}
                         value={mail}
-                        onChange={setMail}
+                        placeholder='mail@gmail.com'
+                        onChangeText={setMail}
                         keyboardType='email-address'
+                        name='mail'
                     />
                 </View>
-
-
-
                 <TouchableOpacity
                     style={{
                         backgroundColor: "#77628C",
                         width: "50%",
                         alignItems: "center",
                         borderRadius: 30,
-                        paddingVertical: 10,
+                        paddingVertical: 5,
                         justifySelf: 'flex-end',
-                        marginVertical: 10,
+                        marginVertical: 15
                     }}
                     onPress={billSave}>
                     <Text
                         style={{
-                            color: '#F9F8EB'
+                            color: '#F9F8EB',
+                            paddingVertical: 5,
+                            fontWeight: '500'
                         }}>Proceed to Payment</Text>
                 </TouchableOpacity>
             </View>
@@ -146,7 +154,7 @@ const ShippingInfo = () => {
                     width: "90%",
                     alignItems: "center",
                     borderRadius: 30,
-                    padding: 5,
+                    padding: 15,
                     justifySelf: 'center',
                     margin: 8
                 }}>
@@ -173,7 +181,6 @@ const ShippingInfo = () => {
                         width: '100%',
                         fontWeight: 'bold'
                     }}>For every $1000 in sales we donate a percentage to this organizations:</Text>
-
                 <Image
                     style={{
                         width: 150,

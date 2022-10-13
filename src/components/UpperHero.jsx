@@ -14,7 +14,7 @@ const MindGrow = () => {
         <View
             style={{
                 width: "100%",
-                height: "45%",
+                height: "35%",
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -34,28 +34,32 @@ const MindGrow = () => {
             <View
                 style={{
                     width: "60%",
-                    height: "70%",
+                    height: "80%",
                     backgroundColor: "#5C8D89",
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
+                    paddingVertical: 10
                 }}>
                 <Pressable 
                 onPress={() => navigation.navigate('Shop')}
                 style={{
-                    padding:5
+                    padding:15,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+
                 }}>
                     <Image 
-                    source={{uri:'https://i.im.ge/2022/10/13/2OGoOp.shopping-cart.png'}}
+                    source={{uri:'https://i.ibb.co/cJffxfJ/carrito-de-compras.png'}}
                     style={{
-                        width:50,
-                        height:50,
+                        width:40,
+                        height:40,
                         padding:10
                     }} />
                     <Text
                     style={{
                         alignSelf: 'center',
-                        color:'#A7D7C5',
+                        color:'#F9F8EB',
                         fontWeight:'bold',
                         padding:10
                     }}>Shop</Text>
