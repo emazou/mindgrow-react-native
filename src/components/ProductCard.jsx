@@ -21,9 +21,9 @@ export default function ProductCard(props) {
                 width: 0,
                 height: 6,
             },
-            shadowOpacity: 0.37,
-            shadowRadius: 7.49,
-            elevation: 12,
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+            elevation: 10,
         }}
         >
             <Image source={{
@@ -111,7 +111,6 @@ export default function ProductCard(props) {
                                 stock: props.stock,
                                 quantity: 1,
                             }))
-                            Alert.alert("Product added")
                         } else {
                             Alert.alert("You must register first")
                         }

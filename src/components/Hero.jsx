@@ -22,7 +22,7 @@ const Hero = () => {
             }}>
             <View style={{
                 flexDirection: 'column',
-                width: "40%",
+                width: "35%",
                 color: "black"
             }}>
                 <UpperHero/>
